@@ -1,0 +1,64 @@
+<a id="openchat" onclick="openChatbox()" class="animated fadeInLeft">
+  <img class="openchat-img img-fluid rounded-circle mx-auto d-block" src="https://app-testeo-konecta.mybluemix.net/img/no-avatar.png">
+  <p class="openchat-text text-center">MPoderosa</p>
+  <p class="text-center openchat-desc">Haz click aquí si necesitas ayuda</p>
+</a>
+<div id="chatmp-konecta">
+  <div class="row align-items-center main-container">
+    <div class="col d-block">
+      <div id="draggable" class="chat-container mx-auto chat-mp">
+        <div class="chat-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-sm-3 profile-header">
+                <img src="https://app-testeo-konecta.mybluemix.net/img/no-avatar.png" class="img-fluid rounded-circle d-block">
+              </div>
+              <div class="col-12 col-sm-8">
+                <div class="title-desc pt-2 text-center">
+                  <div class="title">Hola, soy MPoderosa</div>
+                  <p>¿En qué puedo ayudarte hoy?</p>
+                </div>
+              </div>
+              <div class="close-chat mt-3">
+                <a class="aclose" onclick="closeChatbox()">
+                  <i class="fas fa-times"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-body">
+          <div id="chat-typing" class="typing-indicator invisible">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="message-pane">
+            <div id="pane-conversation" class="pane-conversation">
+              <ul id="scrollingChat"></ul>
+            </div>
+            <div class="pane-action">
+              <div class="action-container">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-9 col-sm-10 column">
+                      <input id="textInput" class="chat-input" placeholder="Escribe aquí" onkeydown="/*globals CanvasJS */
+                      ConversationPanel.inputKeyDown(event, this)" autofocus>
+                    </div>
+                    <div class="col-3 col-sm-2 column">
+                      <div class="action-send">
+                        <a class="icon" onclick="clearFields()" href="javascript:void(0)">
+                          <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

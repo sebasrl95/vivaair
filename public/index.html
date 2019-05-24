@@ -1,0 +1,106 @@
+<html>
+
+<head>
+  <base href="/">
+  <title>Viva Air</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="og:image" content="conversation.svg" />
+  <meta property="og:title" content="MPoderosa" />
+  <link rel="shortcut icon" href="./VivaColombia.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/scripts/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./lib/fontawesome-5.0.10/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="./lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/chatviva.min.css">
+  <link rel="stylesheet" href="./css/animate.min.css">
+  <script src="/scripts/jquery/dist/jquery.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div class="container-fluid pt-5">
+    <div class="row align-items-center main-container">
+      <div class="col d-block">
+        <div id="draggable" class="chat-viva mx-auto">
+          <div class="chat-header">
+            <div class="img-profile">
+              <img src="./img/vivair-logo.png" class="img-fluid">
+            </div>
+            <div class="title text-center">
+              <p>¡Bienvenido a nuestro menú virtual!</p>
+            </div>
+            <div class="close-chat mt-3">
+              <a class="aclose" onclick="closeChatbox()">
+                <i class="fas fa-times"></i>
+              </a>
+            </div>
+            <a id="menu-button" href="javascript:void(0);" class="menu-button d-none animated fadeIn"
+              onclick="backToMenu()">
+              Mostrar menú<i class="fas fa-chevron-right"></i>
+            </a>
+            <div class="divider"></div>
+          </div>
+          <div class="chat-body">
+            <div class="message-pane">
+              <div id="pane-conversation" class="pane-conversation">
+                <ul id="scrollingChat"></ul>
+              </div>
+              <div id="chat-typing" class="typing-indicator">
+                <div class="loading">
+                  <h2>Cargando...</h2>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="pane-action d-none">
+              <div class="action-container">
+                <input id="textInput" class="chat-input animated" placeholder="Escribe aquí" onkeydown="/*globals CanvasJS */
+                      ConversationPanel.inputKeyDown(event, this)" autofocus=true disabled="disabled" />
+                <a class="icon-send" onclick="clearFields()" href="javascript:void(0)">
+                  <i class="fas fa-paper-plane"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalsViva"></div>
+
+  <script src="./js/BuildButtons.js"></script>
+  <script src="./js/conversation.js"></script>
+  <script src="./js/botonesManager.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/payload.js"></script>
+  <script src="./js/global.js"></script>
+  <script src="./js/serviciosConsumir.js"></script>
+  <script src="/scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    function backToMenu() {
+      document.querySelector('#textInput').value = 'Ver Menú';
+      ConversationPanel.pasoMensaje(document.getElementById('textInput'))
+    }
+
+    function clearFields() {
+      var texto = document.querySelector('#textInput')
+      ConversationPanel.pasoMensaje(texto)
+    }
+
+    function closeChatbox() {
+      var e = document.getElementById("draggable");
+      e.style.margin = "0 0 -1500px 0";
+      document.querySelectorAll('#draggable')[0].style.display = "none"
+    }
+  </script>
+
+</body>
+
+</html>
