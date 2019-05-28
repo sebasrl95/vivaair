@@ -2,8 +2,8 @@
 // all display and behaviors of the conversation column of the app.
 /* eslint no-unused-vars: "off" */
 /* global Api: true, Common: true*/
-//var bluemixHost = 'https://app-testeo-konecta2.mybluemix.net';
-var bluemixHost = 'http://172.20.50.54:5000';
+var bluemixHost = 'https://vivaair.mybluemix.net';
+//var bluemixHost = 'http://172.20.50.54:5000';
 var scrollingChat = '';
 var retornoConsultaInicial = null;
 var retornoConsultaFinal = null;

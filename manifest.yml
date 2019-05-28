@@ -1,10 +1,10 @@
 applications:
 - path: .
-  memory: 128M
+  memory: 256M
   instances: 1
   domain: mybluemix.net
-  host: app-testeo-konecta2
-  name: app-testeo-konecta2
+  host: vivaair
+  name: app-web-vivaair
   disk_quota: 1024M
   env:
     NPM_CONFIG_PRODUCTION: 'false'

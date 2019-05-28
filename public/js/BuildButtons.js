@@ -1,8 +1,8 @@
 var currentdate = new Date();
 var datetime = formatAMPM(currentdate);
 var countModalsViva = 0;
-var bluemixHost = "http://172.20.50.54:5000";
-//var bluemixHost = 'https://app-testeo-konecta2.mybluemix.net'
+//var bluemixHost = "http://172.20.50.54:5000";
+var bluemixHost = 'https://vivaair.mybluemix.net'
 
 function ArmarBotones(texto, nodoDialog) {
     var cabecera, cuerpo, final = "";
@@ -21,8 +21,8 @@ function ArmarBotones(texto, nodoDialog) {
             for (var i = 0; i < imagenSlide[1].split("tablet/")[1].split(".jpg")[0]; i++) {
                 if (imagenSlide[1].split("tablet/")[0] + (i + 1)) {
                     var imgCatalog = {
-                        src: `${imagenSlide[1].split("tablet/")[0]+"tablet/"+(i+1)}.jpg`,
-                        thumb: `${imagenSlide[1].split("tablet/")[0]+"tablet/"+(i+1)}.jpg`,
+                        src: `${imagenSlide[1].split("tablet/")[0] + "tablet/" + (i + 1)}.jpg`,
+                        thumb: `${imagenSlide[1].split("tablet/")[0] + "tablet/" + (i + 1)}.jpg`,
                     };
                     itemsCatalog.push(imgCatalog);
                 }
@@ -33,7 +33,7 @@ function ArmarBotones(texto, nodoDialog) {
 							<div class="imageCatalogContainer mx-auto">								
 								<a class="imageCatalog">
 									<i class="fas fa-search-plus"></i>
-									<img src="${imagenSlide[1].split("tablet/")[0]+'tablet/'}1.jpg" class="hover-shadow cursor" />
+									<img src="${imagenSlide[1].split("tablet/")[0] + 'tablet/'}1.jpg" class="hover-shadow cursor" />
 								</a>
 							</div>
 						</div>
@@ -171,7 +171,7 @@ function Cuerpo(botones) {
 
             if (myString.replace(" ", "") == "Calificacion1" || myString.replace(" ", "") == "Calificacion2" || myString.replace(" ", "") == "Calificacion3" || myString.replace(" ", "") == "Calificacion4" || myString.replace(" ", "") == "Calificacion5") {
                 cuerpo = `${cuerpo} <a class="social" onclick="ButtonClick_Test('${myString}')">                                        
-                                        <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ","")}.png">
+                                        <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ", "")}.png">
                                     </a>`;
             } else {
                 cuerpo = `<div class="col-12">
@@ -187,7 +187,7 @@ function Cuerpo(botones) {
 
                     if (myString.replace(" ", "") == "Calificacion1" || myString.replace(" ", "") == "Calificacion2" || myString.replace(" ", "") == "Calificacion3" || myString.replace(" ", "") == "Calificacion4" || myString.replace(" ", "") == "Calificacion5") {
                         cuerpo = `${cuerpo} <a class="social" onclick="ButtonClick_Test('${myString}')">                                                
-                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ","")}.png">
+                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ", "")}.png">
                                             </a>`;
                     } else {
                         cuerpo = `${cuerpo} 
@@ -200,7 +200,7 @@ function Cuerpo(botones) {
                 } else {
                     if (myString.replace(" ", "") == "Calificacion1" || myString.replace(" ", "") == "Calificacion2" || myString.replace(" ", "") == "Calificacion3" || myString.replace(" ", "") == "Calificacion4" || myString.replace(" ", "") == "Calificacion5") {
                         cuerpo = `${cuerpo} <a class="social" onclick="ButtonClick_Test('${myString}')">                                                
-                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ","")}.png">
+                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ", "")}.png">
                                             </a>`;
                     } else {
                         cuerpo = `${cuerpo} 
@@ -215,7 +215,7 @@ function Cuerpo(botones) {
                 if (contador % 2 === 0) {
                     if (myString.replace(" ", "") == "Calificacion1" || myString.replace(" ", "") == "Calificacion2" || myString.replace(" ", "") == "Calificacion3" || myString.replace(" ", "") == "Calificacion4" || myString.replace(" ", "") == "Calificacion5") {
                         cuerpo = `${cuerpo} <a class="social" onclick="ButtonClick_Test('${myString}')">                                                
-                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ","")}.png">
+                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ", "")}.png">
                                             </a>`;
                     } else {
                         cuerpo = `${cuerpo} 
@@ -228,7 +228,7 @@ function Cuerpo(botones) {
                 } else {
                     if (myString.replace(" ", "") == "Calificacion1" || myString.replace(" ", "") == "Calificacion2" || myString.replace(" ", "") == "Calificacion3" || myString.replace(" ", "") == "Calificacion4" || myString.replace(" ", "") == "Calificacion5") {
                         cuerpo = `${cuerpo} <a class="social" onclick="ButtonClick_Test('${myString}')">                                                
-                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ","")}.png">
+                                                <img class="img-fluid" src="${bluemixHost}/img/${myString.replace(" ", "")}.png">
                                             </a>`;
                     } else {
                         cuerpo = `${cuerpo} 
@@ -294,7 +294,7 @@ function Video(texto) {
 
 function imagenEnlace(texto) {
     var imagenEnlace = texto.split("((boton imagen enlace: ");
-    
+
     for (var i = 1; i < imagenEnlace.length; i++) {
         countModalsViva++;
 
@@ -323,7 +323,7 @@ function imagenEnlace(texto) {
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <img src="${parametros[2].replace(" ","")}" class="img-responsive" style="width: 100%" />
+                                    <img src="${parametros[2].replace(" ", "")}" class="img-responsive" style="width: 100%" />
                                 </div>
                             </div>
                             </div>
@@ -351,7 +351,7 @@ function imagenEnlace(texto) {
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <img src="${parametros[2].replace(" ","")}" class="img-responsive" style="width: 100%" />
+                                    <img src="${parametros[2].replace(" ", "")}" class="img-responsive" style="width: 100%" />
                                 </div>
                             </div>
                             </div>
@@ -388,7 +388,7 @@ function ModalImage(texto) {
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <img src="${url[1].replace(" ","")}" class="img-responsive" style="width: 100%" />
+                                    <img src="${url[1].replace(" ", "")}" class="img-responsive" style="width: 100%" />
                                 </div>
                             </div>
                             </div>
@@ -410,7 +410,7 @@ function ModalImage(texto) {
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <img src="${url[1].replace(" ","")}" class="img-responsive" style="width: 100%" />
+                                    <img src="${url[1].replace(" ", "")}" class="img-responsive" style="width: 100%" />
                                 </div>
                             </div>
                             </div>
@@ -477,8 +477,8 @@ function surveyStars(texto) {
             for (let index = options.length - 1; index >= 0; index--) {
                 let option = options[index];
                 survey = `${survey} 
-                <input class="rating-star star-${index+1}" id="${option}" type="radio" name="star" onchange="enviarCalificacion('${option}')">
-                <label class="rating-star star-${index+1}" for="${option}" title="${option}"></label>`;
+                <input class="rating-star star-${index + 1}" id="${option}" type="radio" name="star" onchange="enviarCalificacion('${option}')">
+                <label class="rating-star star-${index + 1}" for="${option}" title="${option}"></label>`;
             }
 
             var textoFinal = "";
@@ -503,8 +503,8 @@ function surveyStars(texto) {
             for (let index = options.length - 1; index >= 0; index--) {
                 let option = options[index];
                 survey = `${survey} 
-                <input class="rating-star star-${index+1}" id="${option}" type="radio" name="star" onchange="enviarCalificacion('${option}')">
-                <label class="rating-star star-${index+1}" for="${option}" title="${option}"></label>`;
+                <input class="rating-star star-${index + 1}" id="${option}" type="radio" name="star" onchange="enviarCalificacion('${option}')">
+                <label class="rating-star star-${index + 1}" for="${option}" title="${option}"></label>`;
             }
 
             texto = `${texto} <div class="text-center">

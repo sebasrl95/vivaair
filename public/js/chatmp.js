@@ -1,6 +1,5 @@
-var bluemixHost = "https://app-testeo-konecta2.mybluemix.net";
+var bluemixHost = "https://vivaair.mybluemix.net";
 //var bluemixHost = 'http://172.20.50.54:3000'
-//var bluemixHost = 'http://172.20.5.73:3000'
 
 // Check jQuery and inject if doesn't exist
 if (typeof jQuery == 'undefined') {

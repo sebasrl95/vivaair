@@ -1,11 +1,11 @@
 // The Api module is designed to handle all interactions with the server
 
-var ApiChatVivaAir = (function() {
+var ApiChatVivaAir = (function () {
   var requestPayload;
   var responsePayload;
- // var bluemixHost = 'https://app-testeo-konecta2.mybluemix.net'
- var bluemixHost = 'http://172.20.50.54:5000';
-  var messageEndpoint = bluemixHost+ '/api/message';
+  var bluemixHost = 'https://vivaair.mybluemix.net'
+  //var bluemixHost = 'http://172.20.50.54:5000';
+  var messageEndpoint = bluemixHost + '/api/message';
 
   // Publicly accessible methods defined
   return {
@@ -13,16 +13,16 @@ var ApiChatVivaAir = (function() {
 
     // The request/response getters/setters are defined here to prevent internal methods
     // from calling the methods without any of the callbacks that are added elsewhere.
-    getRequestPayload: function() {
+    getRequestPayload: function () {
       return requestPayload;
     },
-    setRequestPayload: function(newPayloadStr) {
+    setRequestPayload: function (newPayloadStr) {
       requestPayload = JSON.parse(newPayloadStr);
     },
-    getResponsePayload: function() {
+    getResponsePayload: function () {
       return responsePayload;
     },
-    setResponsePayload: function(newPayloadStr) {
+    setResponsePayload: function (newPayloadStr) {
       responsePayload = JSON.parse(newPayloadStr);
     }
   };
@@ -36,7 +36,7 @@ var ApiChatVivaAir = (function() {
         text: text
       };
     }
-    
+
     if (context) {
       payloadToWatson.context = context;
     }
@@ -44,7 +44,7 @@ var ApiChatVivaAir = (function() {
     var http = new XMLHttpRequest();
     http.open('POST', messageEndpoint, true);
     http.setRequestHeader('Content-type', 'application/json');
-    http.onreadystatechange = function() {
+    http.onreadystatechange = function () {
       if (http.readyState === 4 && http.status === 200 && http.responseText) {
         ApiChatVivaAir.setResponsePayload(http.responseText);
       }
