@@ -1,7 +1,7 @@
 var currentdate = new Date();
 var datetime = formatAMPM(currentdate);
 var countModalsViva = 0;
-//var bluemixHost = "http://172.20.50.54:5000";
+//var bluemixHost = "http://localhost:5000";
 var bluemixHost = 'https://vivaair.mybluemix.net'
 
 function ArmarBotones(texto, nodoDialog) {
@@ -120,7 +120,8 @@ function ArmarBotones(texto, nodoDialog) {
         var botones = texto.split("((botones seleccion: ")
         cabecera = Cabecera(botones);
         cuerpo = Cuerpo(botones);
-        final = `</div></div><small class="time text-right">${datetime}</small>`;
+        //final = `</div></div><small class="time text-right">${datetime}</small>`;
+        final = `</div></div>`;
 
         return cabecera + cuerpo + final;
 
@@ -145,10 +146,17 @@ function TextoPlano(texto) {
 				<div class="msj macro">
 					<div class="text text-r">
 						<p>${texto}</p>
-						<small class="time text-right">${datetime}</small>
 					</div>					
 				</div>
-			</div>`;
+            </div>`;
+    // return `<div class="from-watson latest top">
+	// 			<div class="msj macro">
+	// 				<div class="text text-r">
+	// 					<p>${texto}</p>
+	// 					<small class="time text-right">${datetime}</small>
+	// 				</div>					
+	// 			</div>
+	// 		</div>`;
 }
 
 function Cabecera(botones) {

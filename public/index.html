@@ -18,18 +18,15 @@
 </head>
 
 <body>
-  <div class="container-fluid pt-5">
-    <div class="row align-items-center main-container">
-      <div class="col d-block">
-        <div id="draggable" class="chat-viva mx-auto">
-          <div class="chat-header">
+  <div class="row main-container">
+    <div class="col">
+      <div id="draggable" class="chat-viva mx-auto">
+        <div class="chat-header">
+          <div class="info-title">
             <div class="img-profile">
               <img src="./img/vivair-logo.png" class="img-fluid">
             </div>
-            <div class="title text-center">
-              <p>¡Bienvenido a nuestro menú virtual!</p>
-            </div>
-            <div class="close-chat mt-3">
+            <div class="close-chat">
               <a class="aclose" onclick="closeChatbox()">
                 <i class="fas fa-times"></i>
               </a>
@@ -38,34 +35,41 @@
               onclick="backToMenu()">
               Mostrar menú<i class="fas fa-chevron-right"></i>
             </a>
-            <div class="divider"></div>
           </div>
-          <div class="chat-body">
-            <div class="message-pane">
-              <div id="pane-conversation" class="pane-conversation">
-                <ul id="scrollingChat"></ul>
+        </div>
+        <div class="chat-body">
+          <div class="message-pane">
+            <div id="pane-conversation" class="pane-conversation">
+              <div class="viva-title">Bienvenidos al Centro de Ayuda Virtual</div>
+              <div class="viva-subtitle">¡Encuentra la respuesta a tus preguntas con un solo clic!
               </div>
-              <div id="chat-typing" class="typing-indicator">
-                <div class="loading">
-                  <h2>Cargando...</h2>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
+              <ul id="scrollingChat"></ul>
+            </div>
+            <div id="chat-typing" class="typing-indicator">
+              <div class="loading">
+                <h2>Cargando...</h2>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
             </div>
-            <div class="pane-action d-none">
-              <div class="action-container">
-                <input id="textInput" class="chat-input animated" placeholder="Escribe aquí" onkeydown="/*globals CanvasJS */
+          </div>
+          <div class="pane-action d-none">
+            <div class="action-container">
+              <input id="textInput" class="chat-input animated" placeholder="Escribe aquí" onkeydown="/*globals CanvasJS */
                       ConversationPanel.inputKeyDown(event, this)" autofocus=true disabled="disabled" />
-                <a class="icon-send" onclick="clearFields()" href="javascript:void(0)">
-                  <i class="fas fa-paper-plane"></i>
-                </a>
-              </div>
+              <a class="icon-send" onclick="clearFields()" href="javascript:void(0)">
+                <i class="fas fa-paper-plane"></i>
+              </a>
             </div>
+          </div>
+        </div>
+        <div class="chat-footer">
+          <div class="viva-footer"><img src="./img/vivair-logo.png" alt="" class="img-fluid">
+            <div class="viva-footer-info">Fast Colombia S.A.S NIT <span>900.313.349-3</span></div>
           </div>
         </div>
       </div>

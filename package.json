@@ -5,14 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test-integration": "casperjs test ./test/integration/test.*.js",
-    "test-integration-runner": "NODE_ENV=test node casper-runner.js",
-    "test": "npm run lint && npm run test-unit && npm run test-integration-runner",
-    "test-unit": "istanbul cover ./node_modules/mocha/bin/_mocha test/unit",
-    "lint": "eslint .",
-    "autofix": "eslint --fix .",
-    "serve": "nodemon server.js",
-    "codecov": "npm run test && (codecov || true)"
+    "dev": "nodemon server.js",
+    "sass": "sass --watch ./public/sass/chatviva.scss:./public/css/chatviva.min.css --style=compressed"
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -30,6 +24,7 @@
     "nodemailer": "^4.1.1",
     "npm": "^6.1.0",
     "registry-url": "^3.1.0",
+    "sass": "^1.23.7",
     "server": "^1.0.0-beta.1",
     "soap": "^0.23.0",
     "watson-developer-cloud": "^2.37.0",

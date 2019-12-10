@@ -108,7 +108,7 @@ app.post('/api/message', function (req, res) {
             var workspace = process.env.WORKSPACE_ID || '<workspace-id>';
         }
 
-    } catch (error) {}
+    } catch (error) { }
 
     if (!workspace || workspace === '<workspace-id>') {
         return res.json({
@@ -147,6 +147,15 @@ app.post('/validateCaptcha', function (req, res) {
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
     // Hitting GET request to the URL, Google will respond with success or error scenario.
     request(verificationUrl, function (error, response, body) {
+        
+        if (error != null) {
+            console.error(error);
+            return res.json({
+                "responseCode": 1,
+                "responseDesc": "Please select captcha"
+            });
+        }
+
         body = JSON.parse(body);
         // Success will be true or false depending upon captcha validation.
         if (body.success !== undefined && !body.success) {

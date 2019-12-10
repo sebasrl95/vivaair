@@ -1,5 +1,5 @@
-var bluemixHost = 'http://172.20.50.54:5000';
-//var bluemixHost = 'https://app-testeo-konecta2.mybluemix.net';
+//var bluemixHost = 'http://localhost:5000';
+var bluemixHost = 'https://vivaair.mybluemix.net';
 var valorRetornar = {};
 var prueba;
 var res = [];
