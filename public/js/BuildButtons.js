@@ -539,7 +539,7 @@ function accordion(texto) {
             accordion[0] = `${accordion[0]} 
                         <div id="accordionViva${i}" class="accordion">
                             <div class="card-header collapsed" data-toggle="collapse" href="#collapse${i}">
-                                <a class="card-title">Item 1</a>
+                                <a class="card-title">Comprar paquetes y/o adicionar servicios</a>
                             </div>
                             <div id="collapse${i}" class="card-body collapse" data-parent="#accordionViva${i}">
                             ${url[0]}
