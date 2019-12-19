@@ -461,7 +461,31 @@
         }
 
         #captcha_container {
-            margin: auto;
+          margin: auto;
+        }
+
+        div.accordion {
+          width: 100%;
+          height: 45px;
+          margin-bottom: 10px;
+          background-color: #000a52;
+          color: #fff;
+          border: none;
+          outline: none;
+          white-space: normal;
+          border-radius: 4px;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .accordion .card-header:after {
+          font-family: "FontAwesome";
+          content: "\f077";
+          float: right;
+        }
+        .accordion .card-header.collapsed:after {
+          /* symbol for "collapsed" panels */
+          content: "\f078";
         }
       }
 
@@ -481,7 +505,6 @@
         display: flex;
 
         a {
-          color: $VivaAzul;
           text-decoration: none;
           font-weight: 800;
           font-size: 14px;

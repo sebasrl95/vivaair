@@ -1,8 +1,8 @@
 var currentdate = new Date();
 var datetime = formatAMPM(currentdate);
 var countModalsViva = 0;
-//var bluemixHost = "http://localhost:5000";
-var bluemixHost = 'https://vivaair.mybluemix.net'
+var bluemixHost = "http://localhost:5000";
+//var bluemixHost = 'https://vivaair.mybluemix.net'
 
 function ArmarBotones(texto, nodoDialog) {
     var cabecera, cuerpo, final = "";
@@ -65,6 +65,10 @@ function ArmarBotones(texto, nodoDialog) {
             });
         }
 
+        if (texto.indexOf("((accordion: ") !== -1) {
+            texto = accordion(texto);
+        }
+
         if (texto.indexOf("((captcha: ") !== -1) {
             texto = `<div id="captcha_container"></div>`;
         }
@@ -86,8 +90,7 @@ function ArmarBotones(texto, nodoDialog) {
         }
 
         if (texto.indexOf("((video: ") !== -1) {
-            texto = Video(texto)
-            console.log(texto)
+            texto = Video(texto);
         }
 
         if (texto.indexOf("((boton descarga: ") !== -1) {
@@ -294,7 +297,6 @@ function Video(texto) {
                           <iframe class="embed-responsive-item" src="${url[0]}" allowfullscreen></iframe>
                         </div>`
         }
-
     }
     texto = video[0]
     return texto;
@@ -523,6 +525,36 @@ function surveyStars(texto) {
         }
     }
 
+    return texto;
+}
+
+function accordion(texto) {
+
+    var accordion = texto.split("((accordion: ")
+    for (var i = 1; i < accordion.length; i++) {
+
+        if (accordion[i].indexOf("))") !== -1 && i < accordion.length) {
+            var url = accordion[i].split("))")
+
+            accordion[0] = `${accordion[0]} 
+                        <div id="accordionViva${i}" class="accordion">
+                            <div class="card-header collapsed" data-toggle="collapse" href="#collapse${i}">
+                                <a class="card-title">Item 1</a>
+                            </div>
+                            <div id="collapse${i}" class="card-body collapse" data-parent="#accordionViva${i}">
+                            ${url[0]}
+                            </div>
+                        </div> 
+                        ${url[1]}`
+        } else {
+            var url = accordion[i].split("))")
+            accordion[0] = `${accordion[0]}<div class="embed-responsive embed-responsive-16by9">
+                          <iframe class="embed-responsive-item" src="${url[0]}" allowfullscreen></iframe>
+                        </div>`;
+        }
+
+    }
+    texto = accordion[0]
     return texto;
 }
 

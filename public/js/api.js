@@ -3,8 +3,8 @@
 var ApiChatVivaAir = (function () {
   var requestPayload;
   var responsePayload;
-  var bluemixHost = 'https://vivaair.mybluemix.net'
-  //var bluemixHost = 'http://localhost:5000';
+  //var bluemixHost = 'https://vivaair.mybluemix.net'
+  var bluemixHost = 'http://localhost:5000';
   var messageEndpoint = bluemixHost + '/api/message';
 
   // Publicly accessible methods defined
