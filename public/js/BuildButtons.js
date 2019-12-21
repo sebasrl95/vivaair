@@ -1,6 +1,7 @@
 var currentdate = new Date();
 var datetime = formatAMPM(currentdate);
 var countModalsViva = 0;
+var countAccordion = 0;
 var bluemixHost = "http://localhost:5000";
 //var bluemixHost = 'https://vivaair.mybluemix.net'
 
@@ -65,8 +66,12 @@ function ArmarBotones(texto, nodoDialog) {
             });
         }
 
-        if (texto.indexOf("((accordion: ") !== -1) {
+        if (texto.indexOf("[[accordion: ") !== -1) {
             texto = accordion(texto);
+        }
+
+        if (texto.indexOf("((tabs: ") !== -1) {
+            texto = tabs(texto);
         }
 
         if (texto.indexOf("((captcha: ") !== -1) {
@@ -83,6 +88,10 @@ function ArmarBotones(texto, nodoDialog) {
 
         if (texto.indexOf("((boton imagen enlace: ") !== -1) {
             texto = imagenEnlace(texto)
+        }
+
+        if (texto.indexOf("((botones seleccion: ") !== -1) {
+            texto = botonesSeleccion(texto)
         }
 
         if (texto.indexOf("((imagen modal: ") !== -1) {
@@ -114,11 +123,19 @@ function ArmarBotones(texto, nodoDialog) {
             //enlace[1].split("))")[1]+'))'
         }
 
-        if (texto.indexOf("((") === -1) {
-            var objConversation = document.getElementById("pane-conversation");
-            texto = TextoPlano(texto)
-            return texto;
-        }
+        // if (texto.indexOf("((") === -1) {
+        //     var objConversation = document.getElementById("pane-conversation");
+        //     texto = TextoPlano(texto)
+        //     return texto;
+        // }
+
+        return `<div class="from-watson latest top">
+            <div class="msj macro">
+                <div class="text text-r">
+                    ${texto}
+                </div>					
+            </div>
+        </div>`;
 
         var botones = texto.split("((botones seleccion: ")
         cabecera = Cabecera(botones);
@@ -148,18 +165,18 @@ function TextoPlano(texto) {
     return `<div class="from-watson latest top">
 				<div class="msj macro">
 					<div class="text text-r">
-						<p>${texto}</p>
+						${texto}
 					</div>					
 				</div>
             </div>`;
     // return `<div class="from-watson latest top">
-	// 			<div class="msj macro">
-	// 				<div class="text text-r">
-	// 					<p>${texto}</p>
-	// 					<small class="time text-right">${datetime}</small>
-	// 				</div>					
-	// 			</div>
-	// 		</div>`;
+    // 			<div class="msj macro">
+    // 				<div class="text text-r">
+    // 					<p>${texto}</p>
+    // 					<small class="time text-right">${datetime}</small>
+    // 				</div>					
+    // 			</div>
+    // 		</div>`;
 }
 
 function Cabecera(botones) {
@@ -257,6 +274,37 @@ function Cuerpo(botones) {
     });
 
     return cuerpo;
+}
+
+function botonesSeleccion(texto) {
+
+    let buttons = texto.split("((botones seleccion: ");
+    let textbtn = '';
+
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].indexOf("))") !== -1) {
+            let url = buttons[i].split("))");
+            let btns = url[0].split(";");
+            textbtn += buttons[0];
+
+            for (let j = 0; j < btns.length; j++) {
+                textbtn += `
+                <div class="container-buttons text-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-sm" type="button" onclick="ButtonClick_Test('${btns[j]}')">
+                                ${btns[j]}
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            textbtn += url[1];
+        }
+    }
+    texto = textbtn;
+    return texto;
 }
 
 function Enlace(texto) {
@@ -530,31 +578,62 @@ function surveyStars(texto) {
 
 function accordion(texto) {
 
-    var accordion = texto.split("((accordion: ")
-    for (var i = 1; i < accordion.length; i++) {
+    let accordion = texto.split("[[accordion: ");
+    let temptext = '';
 
-        if (accordion[i].indexOf("))") !== -1 && i < accordion.length) {
-            var url = accordion[i].split("))")
+    for (let i = 1; i < accordion.length; i++) {
+        let split = accordion[i].split("]]");
+        let acc = split[0].split('+');
+        temptext += accordion[0];
 
-            accordion[0] = `${accordion[0]} 
-                        <div id="accordionViva${i}" class="accordion">
+        for (let j = 0; j < acc.length; j++) {
+            let parametros = acc[j].split("|");
+            temptext += `<div id="accordionViva${countAccordion}" class="accordion">
+                                <div class="card-header collapsed" data-toggle="collapse" href="#collapse${countAccordion}">
+                                    ${parametros[0].trim()}
+                                </div>
+                                <div id="collapse${countAccordion}" class="card-body collapse" data-parent="#accordionViva${countAccordion}">
+                                ${parametros[1]}
+                                </div>
+                            </div> `;
+            countAccordion++;
+        }
+
+        temptext = temptext + split[1];
+        
+    }
+
+    texto = temptext;
+    return texto;
+}
+
+function tabs(texto) {
+
+    var tabs = texto.split("((tabs: ")
+    for (var i = 1; i < tabs.length; i++) {
+
+        if (tabs[i].indexOf("))") !== -1 && i < tabs.length) {
+            var url = tabs[i].split("))")
+
+            tabs[0] = `${tabs[0]} 
+                        <div id="tabsViva${i}" class="tabs">
                             <div class="card-header collapsed" data-toggle="collapse" href="#collapse${i}">
-                                <a class="card-title">Comprar paquetes y/o adicionar servicios</a>
+                                Comprar paquetes y/o adicionar servicios
                             </div>
-                            <div id="collapse${i}" class="card-body collapse" data-parent="#accordionViva${i}">
+                            <div id="collapse${i}" class="card-body collapse" data-parent="#tabsViva${i}">
                             ${url[0]}
                             </div>
                         </div> 
                         ${url[1]}`
         } else {
-            var url = accordion[i].split("))")
-            accordion[0] = `${accordion[0]}<div class="embed-responsive embed-responsive-16by9">
+            var url = tabs[i].split("))")
+            tabs[0] = `${tabs[0]}<div class="embed-responsive embed-responsive-16by9">
                           <iframe class="embed-responsive-item" src="${url[0]}" allowfullscreen></iframe>
                         </div>`;
         }
 
     }
-    texto = accordion[0]
+    texto = tabs[0]
     return texto;
 }
 

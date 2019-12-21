@@ -110,7 +110,6 @@
   .chat-header {
     width: 100%;
     height: 60px;
-    flex: 1 0 auto;
     border-radius: 0;
     background-color: $VivaAmarillo;
 
@@ -198,12 +197,12 @@
   // Body
   .chat-body {
     width: 100%;
-    height: 100%;
+    height: 80vh;
+    flex: 1 0 auto;
     position: relative;
     border-radius: 0 0 5px 5px;
 
     @media (max-width: 576px) {
-      height: 87%;
       padding: 0;
     }
 
@@ -335,11 +334,12 @@
         ul {
           list-style: none;
           padding: 0;
+          margin-top: 10px;
         }
 
         p {
           margin: 0;
-          padding: 5px;
+          padding: 0;
           font-size: 14px;
         }
 
@@ -465,27 +465,39 @@
         }
 
         div.accordion {
-          width: 100%;
-          height: 45px;
-          margin-bottom: 10px;
-          background-color: #000a52;
-          color: #fff;
-          border: none;
-          outline: none;
-          white-space: normal;
-          border-radius: 4px;
-          font-size: 13px;
-          font-weight: 600;
-        }
+          .card-header {
+            width: 100%;
+            height: 45px;
+            padding: 0 15px;
+            border-radius: 4px;
+            background-color: $VivaAzul;
+            color: #fff;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            line-height: 1;
+            cursor: pointer;
+            margin-bottom: 10px;
 
-        .accordion .card-header:after {
-          font-family: "FontAwesome";
-          content: "\f077";
-          float: right;
-        }
-        .accordion .card-header.collapsed:after {
-          /* symbol for "collapsed" panels */
-          content: "\f078";
+            &:after {
+              font-family: "FontAwesome";
+              content: "\f077";
+              float: right;
+            }
+          }
+
+          .card-body {
+            padding: 0 12px 8px 12px;
+          }
+
+          .collapsed {
+            &:after {
+              /* symbol for "collapsed" panels */
+              content: "\f078";
+            }
+          }
         }
       }
 
@@ -500,14 +512,12 @@
           max-width: 100%;
         }
 
-        margin: 5px 0 5px 0;
         min-width: 20%;
         display: flex;
 
         a {
           text-decoration: none;
-          font-weight: 800;
-          font-size: 14px;
+          font-size: 13px;
           font-family: $font-muli;
         }
       }
