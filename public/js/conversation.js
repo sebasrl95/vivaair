@@ -2,8 +2,8 @@
 // all display and behaviors of the conversation column of the app.
 /* eslint no-unused-vars: "off" */
 /* global Api: true, Common: true*/
-//var bluemixHost = 'https://vivaair.mybluemix.net';
-var bluemixHost = 'http://localhost:5000';
+var bluemixHost = 'https://vivaair.mybluemix.net';
+//var bluemixHost = 'http://localhost:5000';
 var scrollingChat = '';
 var retornoConsultaInicial = null;
 var retornoConsultaFinal = null;
@@ -116,11 +116,11 @@ var ConversationPanel = (function () {
     }
 
     // Any time the input changes, or the window resizes, adjust the size of the input box
-    input.addEventListener('input', adjustInput);
-    window.addEventListener('resize', adjustInput);
+    // input.addEventListener('input', adjustInput);
+    // window.addEventListener('resize', adjustInput);
 
     // Trigger the input event once to set up the input box and dummy element
-    Common.fireEvent(input, 'input');
+    // Common.fireEvent(input, 'input');
   }
 
   // Display a user or Watson message that has just been sent/received
@@ -151,7 +151,7 @@ var ConversationPanel = (function () {
           if (capturaValorNodo.hasOwnProperty('output') === false) {
             $('#chat-typing').removeClass('invisible');
             $('#chat-typing').addClass('visible');
-            document.querySelector('#textInput').disabled = true;
+            //document.querySelector('#textInput').disabled = true;
 
             if (capturaValorNodo.context != undefined) {
               if (capturaValorNodo.context.system.dialog_stack['0'].dialog_node === 'node_2_1527782008192' &&
@@ -178,8 +178,8 @@ var ConversationPanel = (function () {
 
             $('#chat-typing').removeClass('visible');
             $('#chat-typing').addClass('invisible');
-            document.querySelector('#textInput').disabled = false;
-            document.querySelector('#textInput').focus();
+            // document.querySelector('#textInput').disabled = false;
+            // document.querySelector('#textInput').focus();
 
             // Consume webservice
             if (capturaValorNodo.output.webservice) {

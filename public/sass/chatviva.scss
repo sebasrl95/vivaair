@@ -72,7 +72,7 @@
 
 // Chat window
 .chat-viva {
-  width: 340px;
+  width: 370px;
   height: 100%;
   position: relative;
   border-radius: 5px;
@@ -397,15 +397,29 @@
             font-size: 13px;
             font-weight: 600;
 
-            &:hover {
-              color: $VivaAmarillo;
-            }
+            // &:hover {
+            //   color: $VivaAmarillo;
+            // }
 
             &:focus {
               outline: none;
               border: none;
               box-shadow: none;
             }
+          }
+          .btn-link {
+            width: 80%;
+            height: 40px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ca0000;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
           }
         }
 
@@ -499,6 +513,33 @@
             }
           }
         }
+
+        ul.nav-pills {
+          width: 100%;
+          display: flex;
+          margin-bottom: 10px;
+
+          .nav-link {
+            color: black;
+            background: #e6e6e6;
+            margin-right: 2%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            line-height: 1;
+            text-align: center;
+            border-radius: 4px;
+            padding: 0 10px;
+            font-size: 13px;
+            transition: all 0.2s;
+          }
+
+          .nav-item .active {
+            background-color: #ca0000;
+            color: #fff;
+          }
+        }
       }
 
       .from-watson {
@@ -514,6 +555,7 @@
 
         min-width: 20%;
         display: flex;
+        margin-bottom: 10px;
 
         a {
           text-decoration: none;
@@ -614,8 +656,9 @@
       bottom: 0;
       width: 100%;
       height: 50px;
-      border-top: 1px solid #000a52;
-      border-bottom: 1px solid #000a52;
+      border: 1px solid $VivaAzul;
+      border-radius: 5px;
+      // border-bottom: 1px solid #000a52;
 
       @media (max-width: 576px) {
         bottom: 0;
@@ -640,6 +683,8 @@
           outline: none;
           overflow: hidden;
           resize: none;
+          background: white;
+          border-radius: 5px;
 
           @media (max-width: 576px) {
             border-radius: 0;

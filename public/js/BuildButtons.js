@@ -2,8 +2,8 @@ var currentdate = new Date();
 var datetime = formatAMPM(currentdate);
 var countModalsViva = 0;
 var countAccordion = 0;
-var bluemixHost = "http://localhost:5000";
-//var bluemixHost = 'https://vivaair.mybluemix.net'
+//var bluemixHost = "http://localhost:5000";
+var bluemixHost = 'https://vivaair.mybluemix.net'
 
 function ArmarBotones(texto, nodoDialog) {
     var cabecera, cuerpo, final = "";
@@ -75,7 +75,15 @@ function ArmarBotones(texto, nodoDialog) {
         }
 
         if (texto.indexOf("((captcha: ") !== -1) {
-            texto = `<div id="captcha_container"></div>`;
+            texto = `<div id="captcha_container"></div>
+            <div class="pane-action d-none">
+            <div class="action-container">
+              <input id="textInput" class="chat-input animated" placeholder="Escribe aquí" autofocus=true/>
+              <a class="icon-send" href="javascript:void(0)">
+                <i class="fas fa-paper-plane"></i>
+              </a>
+            </div>
+          </div>`;
         }
 
         if (texto.indexOf("((encuesta estrella: ") !== -1) {
@@ -84,6 +92,10 @@ function ArmarBotones(texto, nodoDialog) {
 
         if (texto.indexOf("((boton enlace: ") !== -1) {
             texto = Enlace(texto)
+        }
+
+        if (texto.indexOf("((boton link: ") !== -1) {
+            texto = botonLink(texto)
         }
 
         if (texto.indexOf("((boton imagen enlace: ") !== -1) {
@@ -274,6 +286,35 @@ function Cuerpo(botones) {
     });
 
     return cuerpo;
+}
+
+function botonLink(texto) {
+
+    let buttons = texto.split("((boton link: ");
+    let textbtn = '';
+
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].indexOf("))") !== -1) {
+            let url = buttons[i].split("))");
+            let btns = url[0].split(";");
+            textbtn += buttons[0];
+
+            textbtn += `
+                <div class="container-buttons text-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="btn btn-primary btn-link" type="button" href="${btns[1]}" target="_blank">
+                                ${btns[0]}
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+
+            textbtn += url[1];
+        }
+    }
+    texto = textbtn;
+    return texto;
 }
 
 function botonesSeleccion(texto) {
@@ -509,7 +550,14 @@ function loadCaptcha() {
                         context['activarInput'] = false;
                     }
 
-                    ApiChatVivaAir.sendRequest(null, context);
+                    ApiChatVivaAir.simpleRequest(null, context, function (res) {
+                        res = JSON.parse(res);
+                        console.log('Response: ', res);
+                        if (res.context.activarInput) {
+                            $('div.pane-action').removeClass('d-none');
+                            $('input#textInput').addClass('fadeIn');
+                        }
+                    });
 
                 },
                 error: function (response) {
@@ -581,26 +629,25 @@ function accordion(texto) {
     let accordion = texto.split("[[accordion: ");
     let temptext = '';
 
-    for (let i = 1; i < accordion.length; i++) {
-        let split = accordion[i].split("]]");
-        let acc = split[0].split('+');
-        temptext += accordion[0];
+    for (let i = 0; i < accordion.length; i++) {
+        if (accordion[i].indexOf("]]") !== -1) {
+            let split = accordion[i].split("]]");
+            let acc = split[0].split(';');
+            temptext += accordion[0];
 
-        for (let j = 0; j < acc.length; j++) {
-            let parametros = acc[j].split("|");
-            temptext += `<div id="accordionViva${countAccordion}" class="accordion">
-                                <div class="card-header collapsed" data-toggle="collapse" href="#collapse${countAccordion}">
-                                    ${parametros[0].trim()}
+            for (let j = 0; j < acc.length; j++) {
+                temptext += `<div id="accordionViva${countAccordion}" class="accordion">
+                                <div id="header${countAccordion}" class="card-header collapsed" data-toggle="collapse" href="#collapse${countAccordion}" onclick="sendRequest('${acc[j]}', '${countAccordion}')">
+                                    ${acc[j]}
                                 </div>
                                 <div id="collapse${countAccordion}" class="card-body collapse" data-parent="#accordionViva${countAccordion}">
-                                ${parametros[1]}
                                 </div>
                             </div> `;
-            countAccordion++;
-        }
+                countAccordion++;
+            }
 
-        temptext = temptext + split[1];
-        
+            temptext += split[1];
+        }
     }
 
     texto = temptext;
@@ -609,32 +656,128 @@ function accordion(texto) {
 
 function tabs(texto) {
 
-    var tabs = texto.split("((tabs: ")
-    for (var i = 1; i < tabs.length; i++) {
+    var tabs = texto.split("((tabs: ");
+    let temptext = '';
 
-        if (tabs[i].indexOf("))") !== -1 && i < tabs.length) {
-            var url = tabs[i].split("))")
+    for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].indexOf("))") !== -1) {
+            let split = tabs[i].split("))");
+            let tab = split[0].split(';');
 
-            tabs[0] = `${tabs[0]} 
-                        <div id="tabsViva${i}" class="tabs">
-                            <div class="card-header collapsed" data-toggle="collapse" href="#collapse${i}">
-                                Comprar paquetes y/o adicionar servicios
-                            </div>
-                            <div id="collapse${i}" class="card-body collapse" data-parent="#tabsViva${i}">
-                            ${url[0]}
-                            </div>
-                        </div> 
-                        ${url[1]}`
-        } else {
-            var url = tabs[i].split("))")
-            tabs[0] = `${tabs[0]}<div class="embed-responsive embed-responsive-16by9">
-                          <iframe class="embed-responsive-item" src="${url[0]}" allowfullscreen></iframe>
-                        </div>`;
+            temptext += `<ul class="nav nav-pills nav-justified">`;
+
+            for (let j = 0; j < tab.length; j++) {
+                if (j == 0) {
+                    textsend = tab[j];
+                }
+                let tabcontentid = 'tabcontent-' + tab[j].replace(/\s+/g, '-').toLowerCase();
+                temptext += `<li class="nav-item">
+                                <a href="#" data-target="#${tabcontentid}" data-toggle="tab" class="nav-link" onclick="sendRequestTab('${tab[j]}', '${tabcontentid}')">${tab[j]}</a>
+                            </li>`;
+            }
+
+            temptext += `</ul>
+                        <div id="tabsContent" class="tab-content">`;
+
+            for (let j = 0; j < tab.length; j++) {
+                let tabcontentid = 'tabcontent-' + tab[j].replace(/\s+/g, '-').toLowerCase();
+                temptext += `
+                    <div id="${tabcontentid}" class="tab-pane fade"></div>`;
+            }
+
+            temptext += `</div>`;
+
+            countAccordion++;
+            temptext += split[1];
         }
-
     }
-    texto = tabs[0]
+    texto = temptext;
     return texto;
+}
+
+function sendRequest(text, id) {
+    let header = $("#header" + id);
+
+    if (text && header.hasClass("collapsed")) {
+        $('#collapse' + id).html('');
+        $('#chat-typing').removeClass('invisible');
+
+        var context;
+        var latestResponse = ApiChatVivaAir.getResponsePayload();
+        if (latestResponse) {
+            context = latestResponse.context;
+        }
+        ApiChatVivaAir.simpleRequest(text, context, function (res) {
+            res = JSON.parse(res);
+            console.log(res);
+            $('#chat-typing').addClass('invisible');
+            let html = '';
+            let captcha = false;
+            res.output.text.map((text) => {
+                html += ArmarBotones(text, null);
+                if (text.includes('((captcha:')) {
+                    captcha = true;
+                }
+            });
+
+            $("#collapse" + id).html(html);
+            if (captcha) {
+                loadCaptcha("collapse" + id);
+            }
+        });
+    }
+}
+
+function sendRequestTab(text, tabid) {
+
+    if (text) {
+        $('#' + tabid).html('');
+        $('#chat-typing').removeClass('invisible');
+
+        var context;
+        var latestResponse = ApiChatVivaAir.getResponsePayload();
+        if (latestResponse) {
+            context = latestResponse.context;
+        }
+        ApiChatVivaAir.simpleRequest(text, context, function (res) {
+            res = JSON.parse(res);
+            $('#chat-typing').addClass('invisible');
+            let html = '';
+            res.output.text.map((text) => {
+                html += ArmarBotones(text, null);
+            });
+
+            $("#" + tabid).html(html);
+        });
+    }
+}
+
+function sendRequestCaptcha(text, id, context) {
+
+    console.log('sendRequestCaptcha: ', text, id, context);
+
+    $('#' + id).html('');
+    $('#chat-typing').removeClass('invisible');
+
+    ApiChatVivaAir.simpleRequest(text, context, function (res) {
+        res = JSON.parse(res);
+        console.log('Response captcha: ', res);
+        $('#chat-typing').addClass('invisible');
+
+        let html = '';
+        let captcha = false;
+        res.output.text.map((text) => {
+            html += ArmarBotones(text, null);
+            if (text.includes('((captcha:')) {
+                captcha = true;
+            }
+        });
+
+        $("#" + id).html(html);
+        if (captcha) {
+            loadCaptcha("collapse" + id);
+        }
+    });
 }
 
 function enviarCalificacion(calificacion) {
